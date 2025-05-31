@@ -1,6 +1,6 @@
 
 
-function Button({icon, text, onClick, bgColor, textColor}){
+function Button({icon, text, onClickCallback, bgColor, textColor}){
     const button = {
         backgroundColor: bgColor, 
         boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05)',
@@ -14,7 +14,7 @@ function Button({icon, text, onClick, bgColor, textColor}){
         cursor: 'pointer',
         }
     return (
-        <button style={button} className="action-button">
+        <button style={button} className="action-button" onClick={onClickCallback}>
             {icon && <img src={icon} alt="icon" className="button-icon" style={styles.icon}/>}
             {text}
         </button>
