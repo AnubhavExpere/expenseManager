@@ -1,11 +1,8 @@
 import { fetchTransactions, insertTransaction, deleteTransaction } from "../models/transactionModel.js";
 
 const getTransactions = async (req, res) => {
-    // console.log(`Body: ${req.body.id}`);
-    // console.log(req.query);
     const userId = req.query.id;
     const result = await fetchTransactions(userId);
-    console.log(result);
     res.json(result);
 }
 

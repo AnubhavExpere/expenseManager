@@ -12,7 +12,7 @@ export const UserProvider = (props) => {
             try {
                 const result = await getUser(userId);
                 setUser(result);
-                console.log(result);                
+                // console.log(result);                
             } catch (err) {
                 console.log('Error fetching user data. \n', err);
             }

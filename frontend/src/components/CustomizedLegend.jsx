@@ -3,11 +3,11 @@ export default function CustomizedLegend({payload}){
     return (
         <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
             {payload.map( (item, index) => {
-                // console.log(item);
+                
                 const percent = (item.payload.percent * 100).toFixed(1);
                 const value=item.payload.value;
                 const name=item.payload.name;
-                // console.log(`value= ${value}, percent= ${percent}`);
+                
                 return (
                     <li key={`item-${index}`} 
                         style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', 

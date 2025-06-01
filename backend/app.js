@@ -6,6 +6,7 @@ import transactionRouter from './routes/transactions.js';
 import analysisRouter from './routes/analysis.js';
 import incomeRouter from './routes/income.js';
 import userRouter from './routes/user.js';
+import expenseRouter from './routes/expense.js';
 
 const app = express();
 const port = 8000;
@@ -22,4 +23,5 @@ app.use('/transactions', transactionRouter);
 app.use('/analysis', analysisRouter);
 app.use('/income', incomeRouter);
 app.use('/user', userRouter);
+app.use('/expense', expenseRouter);
 
