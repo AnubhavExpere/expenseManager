@@ -3,7 +3,7 @@ import '../styles/AddTransactionModal.css';
 import {addTransaction} from "../services/TransactionAPI"; 
 import { ModalContext } from "../context/Modal";
 
-const ID=1
+const ID=1;
 
 export default function AddTransactionModal(){
     const [formData, setFormData] = useState({
@@ -30,7 +30,10 @@ export default function AddTransactionModal(){
         await addTransaction(formData);
     }
 
-    const hideModal = () => modalContext.setVisibleAddExpense(false);
+    const hideModal = (e) => {
+        e.preventDefault();
+        modalContext.setVisibleAddExpense(false);
+    }
 
     return (
         <div className={`modal-container ${modalContext.visibleAddExpense ? '' : 'hide-container'}`}>
@@ -39,7 +42,7 @@ export default function AddTransactionModal(){
                     <h1>Add Expense</h1>
                     <img src='assets/close.png' className="close-btn" id="close" onClick={hideModal} />
                 </div>
-                <form id="add-expense-form" onSubmit={handleSubmit}>
+                <form id="add-expense-form">
                     <div className="input-container">
                         <label htmlFor="amount">Amount</label>
                         <input
@@ -114,7 +117,7 @@ export default function AddTransactionModal(){
                     </div>
                     <div className="form-submit-buttons">
                         <button className="cancel-btn" onClick={hideModal}>Cancel</button>
-                        <input form="add-expense-form" type="submit" value="Add" className="submit-btn" />
+                        <input form="add-expense-form" type="submit" value="Add" className="submit-btn" onClick={handleSubmit}/>
                     </div>
                 </form>
             </div>

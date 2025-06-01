@@ -5,7 +5,6 @@ const BASE_URL = 'http://localhost:8000'
 const getTransactions = async (id) => {
     const response = await fetch(`${BASE_URL}/transactions?id=${id}`);
     const data = await response.json();
-    // console.log('Data: ', data);
     return data;
 }
 async function addTransaction(formData){

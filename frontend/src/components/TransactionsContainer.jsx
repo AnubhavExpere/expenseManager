@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
-import axios from 'axios';
+import { useState, useEffect, useContext } from "react";
 import { getTransactions } from "../services/TransactionAPI";
+import { UserContext } from "../context/User";
 
-
-const userId = 1;
-
-export default function TransactionsContainer(){
+export default function TransactionsContainer(props){
     const [transactions, setTransactions] = useState([]);
     const [error, setError] = useState(null);
     const [loading,setLoading] = useState(true);
+
+    const userContext = useContext(UserContext);
+    const userId = userContext.userId;
 
     useEffect(() => {
         const loadTransactions = async () => {
@@ -24,8 +24,15 @@ export default function TransactionsContainer(){
             }
         }
         loadTransactions();
-      }, []);
-      
+    }, []);
+
+    const searchQuery = props.search;
+
+    const filteredTransaction = searchQuery ?  transactions.filter( row => 
+                            row.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            row.description.toLowerCase().includes(searchQuery.toLowerCase())
+                            ) : transactions;
+                                  
     return (
         <div className='transactions-container'>    
             <div>
@@ -38,12 +45,12 @@ export default function TransactionsContainer(){
                             <th>Date</th>
                             <th>Category</th>
                             <th>Description</th>
-                            <th>Amount($)</th>
+                            <th>Amount(₹)</th>
                             <th>Payment Method</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {transactions.map((row, index) => (
+                        {filteredTransaction.map((row, index) => (
                             <tr key={index}>
                                 <td>{new Date(row.timestamp).toLocaleDateString()}</td>
                                 <td>{row.category}</td>

@@ -1,22 +1,27 @@
 import TransactionsContainer from "./TransactionsContainer";
 import Button from './Button';
 import GoalProgress from "./GoalProgress";
+import { useState } from "react";
 
 export default function BottomContainer(){
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const handleChange = (e) => setSearchQuery(e.target.value);
+
     return (
         <div className='bottom-container'>
             <div className='transactions-view'>
                 <div className='view-controls'>
                     <div className='search-transactions'>
                         <img src='assets/search.png' style={{width: '20px', height: '20px'}}/>
-                        <input type='text' placeholder="Search transactions"/>
+                        <input type='text' placeholder="Search transactions" value={searchQuery} onChange={handleChange} />
                     </div>
                     <div className="sort-filter-buttons">
                         <Button icon='assets/sort.png' text='Sort' onClick='' bgColor='white' textColor='#646464'/>
                         <Button icon='assets/filter.png' text='Filter' onClick='' bgColor='white' textColor='#646464'/>
                     </div>
                 </div>
-                <TransactionsContainer />
+                <TransactionsContainer search={searchQuery} />
             </div>
             <div className="goal-container">
                 <div className='goal-heading'>

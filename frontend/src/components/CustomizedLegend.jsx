@@ -19,7 +19,7 @@ export default function CustomizedLegend({payload}){
                             <span>{`${name}`}</span>
                         </div>
                         <div style={{display: 'flex', gap: '10px'}}>
-                            <span>${value}</span>
+                            <span>₹{value}</span>
                             <span>{percent}%</span>
                         </div>
                     </li>

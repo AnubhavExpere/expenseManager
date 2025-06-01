@@ -36,7 +36,7 @@ export default function BarChartComponent() {
           <Label value="Month" offset={0} position="bottom" style={{fontSize: '15px'}} />
         </XAxis>
         <YAxis tickLine={false} axisLine={false} tick={{fontSize: '12px'}}>
-          <Label angle={-90} value='Amount in $' offset={0} position='left' style={{textAnchor: 'middle', fontSize: '14px'}}/>
+          <Label angle={-90} value='Amount in ₹' offset={0} position='left' style={{textAnchor: 'middle', fontSize: '14px'}}/>
         </YAxis>
         <Tooltip />
         <Bar dataKey="income" fill="#646a68" radius={[5, 5, 0, 0]} />

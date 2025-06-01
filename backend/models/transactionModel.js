@@ -2,7 +2,7 @@ import pool from '../db/index.js';
 
 const fetchTransactions = async (userId) => {
     try {
-        const result = await pool.query(`SELECT timestamp, amount, receiver, category, payment_method, description FROM transactions WHERE user_id=$1`, [userId]);
+        const result = await pool.query(`SELECT timestamp, amount, receiver, category, payment_method, description FROM transactions WHERE user_id=$1 ORDER BY timestamp DESC`, [userId]);
         return result.rows;
     } catch (error) {
         console.error('Error fecthing transactions: ', error);
