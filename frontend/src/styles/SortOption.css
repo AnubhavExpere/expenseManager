@@ -1,0 +1,29 @@
+.sort-option-container {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    color: rgb(100, 100, 100);
+    padding: 2px 15px;
+}
+
+.sort-option-container:hover {
+    background-color: #c3c2c2b9;
+}
+
+.dot {
+    background-color: black;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.inactive-dot {
+    visibility: hidden;
+}
+
+.active-option, .active-option:hover {
+    color: black;
+    background-color: rgba(8, 2, 47, 0.059);
+}

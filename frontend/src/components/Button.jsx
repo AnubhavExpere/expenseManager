@@ -1,17 +1,17 @@
 
 
-function Button({icon, text, onClickCallback, bgColor, textColor}){
+function Button({icon, text, onClickCallback, bgColor, textColor, border}){
     const button = {
         backgroundColor: bgColor, 
         boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05)',
         color: textColor, 
-        border: 'none',
         borderRadius: '5px', 
         display: 'flex',
         justifyContent: 'center',
         textAlign: 'center',
         padding: '7px 10px',
         cursor: 'pointer',
+        border: border ? border : 'none',
         }
     return (
         <button style={button} className="action-button" onClick={onClickCallback}>
