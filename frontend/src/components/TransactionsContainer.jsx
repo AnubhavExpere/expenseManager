@@ -2,11 +2,38 @@ import { useState, useEffect, useContext } from "react";
 import { getTransactions } from "../services/TransactionAPI";
 import { UserContext } from "../context/User";
 
+const sortArray = (array, key, order) => {
+    //slice() is used here to create a shallow copy of array [preserve original data]
+    return array.slice().sort((a, b) => {
+        let valA = a[key];
+        let valB = b[key];
+
+        // Convert strings to numbers or dates if needed
+        if (key === 'amount') {
+            valA = parseFloat(valA);
+            valB = parseFloat(valB);
+        } else if (key === 'timestamp') {
+            valA = new Date(valA);
+            valB = new Date(valB);
+        }
+
+        if (valA < valB) return order === 'ascending' ? -1 : 1;
+        if (valA > valB) return order === 'descending' ? -1 : 1;
+        return 0;
+    });
+}
+
 export default function TransactionsContainer(props){
     const [transactions, setTransactions] = useState([]);
     const [error, setError] = useState(null);
     const [loading,setLoading] = useState(true);
 
+    //props
+    const searchQuery = props.search;
+    const sortKey = props.sortKey;
+    const sortOrder = props.sortOrder;
+
+    //user context
     const userContext = useContext(UserContext);
     const userId = userContext.userId;
 
@@ -26,12 +53,12 @@ export default function TransactionsContainer(props){
         loadTransactions();
     }, []);
 
-    const searchQuery = props.search;
-
-    const filteredTransaction = searchQuery ?  transactions.filter( row => 
+    let filteredTransaction = searchQuery ?  transactions.filter( row => 
                             row.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
                             row.description.toLowerCase().includes(searchQuery.toLowerCase())
                             ) : transactions;
+
+    filteredTransaction = sortArray(filteredTransaction,sortKey,sortOrder);
                                   
     return (
         <div className='transactions-container'>    

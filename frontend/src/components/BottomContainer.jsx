@@ -7,7 +7,7 @@ import SortBox from "./SortBox";
 export default function BottomContainer(){
     const [searchQuery, setSearchQuery] = useState('');
     const [showSortBox, setShowSortBox] = useState(false);
-    const [sortKey,setSortKey] = useState('date');
+    const [sortKey,setSortKey] = useState('timestamp');
     const [sortOrder, setSortOrder] = useState('descending');
 
     const sortBtnRef = useRef();
@@ -23,7 +23,7 @@ export default function BottomContainer(){
         if (sortBtnRef.current && !sortBtnRef.current.contains(e.target))
             setShowSortBox(false);
     }  
-    
+
     useEffect(() => {
         if (showSortBox) {
             window.addEventListener("click", handleClickOutside);
@@ -62,7 +62,7 @@ export default function BottomContainer(){
                         <Button icon='assets/filter.png' text='Filter' onClick='' bgColor='white' textColor='#646464'/>
                     </div>
                 </div>
-                <TransactionsContainer search={searchQuery} />
+                <TransactionsContainer search={searchQuery} sortKey={sortKey} sortOrder={sortOrder} />
             </div>
             <div className="goal-container">
                 <div className='goal-heading'>

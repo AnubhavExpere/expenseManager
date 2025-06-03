@@ -19,7 +19,7 @@ export default function SortBox({setShowSortBox, sortKey, setSortKey, sortOrder,
             <div className="sort-field-container">
                 <SortOption label='Amount' onClick={()=> handleSelectField('amount')} active={sortKey==='amount'}/>
                 <SortOption label='Category' onClick={()=> handleSelectField('category')} active={sortKey==='category'}/>
-                <SortOption label='Date' onClick={()=> handleSelectField('date')} active={sortKey==='date'}/>
+                <SortOption label='Date' onClick={()=> handleSelectField('timestamp')} active={sortKey==='timestamp'}/>
             </div>
             <div className="divider-line"></div>
             <div className="sort-order-container">
