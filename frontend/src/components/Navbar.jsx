@@ -10,7 +10,7 @@ function Navbar(){
             {/* </Link> */}
             <div className='navbar-list'>
                 <div>Home</div>
-                <div>Account</div>
+                <div>Transactions</div>
                 <div>Contact Us</div>
                 <div>Settings</div>
             </div>

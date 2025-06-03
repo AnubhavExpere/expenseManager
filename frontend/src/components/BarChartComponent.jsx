@@ -1,32 +1,39 @@
-// BarChartComponent.jsx
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Label} from 'recharts';
+import { UserContext } from '../context/User';
+import { getMonthlyExpenseByYear, getMonthlyIncomeByYear } from '../services/UserAPI';
 
 /* Need to use some other charts library, may be Chartjs */
 
-export default function BarChartComponent() {
-  const [data, setData] = useState([
-    { "label": "Jan", "income": 400, "expense": 200},
-    { "label": "Feb", "income": 300, "expense": 200},
-    { "label": "Mar", "income": 500, "expense": 200},
-    { "label": "Apr", "income": 400, "expense": 200},
-    { "label": "May", "income": 700, "expense": 200},
-    { "label": "Jun", "income": 800, "expense": 200},
-    { "label": "Jul", "income": 300, "expense": 200},
-    { "label": "Aug", "income": 550, "expense": 200},
-    { "label": "Sep", "income": 750, "expense": 200},
-    { "label": "Oct", "income": 900, "expense": 200},
-    { "label": "Nov", "income": 960, "expense": 200},
-    { "label": "Dec", "income": 470, "expense": 200}
-  ]);
+const DATE = new Date();
 
-//   useEffect(() => {
-//     // Fetch data from backend API
-//     fetch('/api/data') // replace with your actual backend route
-//       .then(res => res.json())
-//       .then(json => setData(json))
-//       .catch(err => console.error("Error loading data:", err));
-//   }, []);
+export default function BarChartComponent() {
+  const [data, setData] = useState([]);
+
+  const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const userId = useContext(UserContext).userId;
+  const year = DATE.getFullYear();
+
+  useEffect(() => {
+    const loadMonthlyData = async () => {
+      const incomeData = await getMonthlyIncomeByYear(userId, year);
+      const expenseData = await getMonthlyExpenseByYear(userId, year);
+
+      const monthlyData = MONTHS.map((label, index) => {
+        const incomeObj = incomeData.find(item => parseInt(item.month) === index + 1);
+        const expenseObj = expenseData.find(item => parseInt(item.month) === index + 1);
+
+        return {
+          label,
+          income: incomeObj ? parseFloat(incomeObj.income) : 0,
+          expense: expenseObj ? parseFloat(expenseObj.expense) : 0,
+        };
+      }); 
+
+      setData(monthlyData);
+    }
+    loadMonthlyData();
+  }, []);
 
   return (
     <ResponsiveContainer width='100%' height={200} style={{padding:'0px'}}>
@@ -36,9 +43,9 @@ export default function BarChartComponent() {
           <Label value="Month" offset={0} position="bottom" style={{fontSize: '15px'}} />
         </XAxis>
         <YAxis tickLine={false} axisLine={false} tick={{fontSize: '12px'}}>
-          <Label angle={-90} value='Amount in $' offset={0} position='left' style={{textAnchor: 'middle', fontSize: '14px'}}/>
+          <Label angle={-90} value='Amount in ₹' offset={0} position='left' style={{textAnchor: 'middle', fontSize: '14px'}}/>
         </YAxis>
-        <Tooltip />
+        <Tooltip formatter={(value => (isNaN(value) ? 0: value))} />
         <Bar dataKey="income" fill="#646a68" radius={[5, 5, 0, 0]} />
         <Bar dataKey="expense" fill="c5c5c5" radius={[5, 5, 0, 0]} />
       </BarChart>

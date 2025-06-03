@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { use, useContext, useState } from "react";
+import '../styles/AddTransactionModal.css';
 import {addTransaction} from "../services/TransactionAPI"; 
+import { ModalContext } from "../context/Modal";
 
-const ID=1
+const ID=1;
 
-export default function AddTransaction(){
+export default function AddTransactionModal(){
     const [formData, setFormData] = useState({
         amount: '',
         category: '',
@@ -13,6 +15,8 @@ export default function AddTransaction(){
         description: '',
         user_id: ID
     });
+
+    const modalContext = useContext(ModalContext);
 
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -26,18 +30,19 @@ export default function AddTransaction(){
         await addTransaction(formData);
     }
 
-    const hideContainer = () => {
-        document.querySelector('.add-expense-container').classList.add('hide-container');   
+    const hideModal = (e) => {
+        e.preventDefault();
+        modalContext.setVisibleAddExpense(false);
     }
 
     return (
-        <div className="add-expense-container">
-            <div className="add-expense-content">
+        <div className={`modal-container ${modalContext.visibleAddExpense ? '' : 'hide-container'}`}>
+            <div className="modal-content">
                 <div className="add-expense-header">
                     <h1>Add Expense</h1>
-                    <button className="close-btn" id="close" onClick={hideContainer}>x</button>
+                    <img src='assets/close.png' className="close-btn" id="close" onClick={hideModal} />
                 </div>
-                <form onSubmit={handleSubmit}>
+                <form id="add-expense-form">
                     <div className="input-container">
                         <label htmlFor="amount">Amount</label>
                         <input
@@ -56,7 +61,7 @@ export default function AddTransaction(){
                             name="category"
                             id="category"
                             type="text"
-                            placeholder="Enter Categpry"
+                            placeholder="Enter Category"
                             className="form-input"
                             onChange={handleChange}
                             value={formData.category}
@@ -87,18 +92,6 @@ export default function AddTransaction(){
                         />
                     </div>
                     <div className="input-container">
-                        <label htmlFor="date">Date</label>
-                        <input
-                            name="date"
-                            id="date"
-                            type="date"
-                            placeholder="Enter Date"
-                            className="form-input"
-                            onChange={handleChange}
-                            value={formData.date}
-                        />
-                    </div>
-                    <div className="input-container">
                         <label htmlFor="description">Description</label>
                         <input
                             name="description"
@@ -110,7 +103,22 @@ export default function AddTransaction(){
                             value={formData.description}
                         />
                     </div>
-                    <input type="submit" value="submit" className="submit-btn" />
+                    <div className="input-container">
+                        <label htmlFor="date">Date</label>
+                        <input
+                            name="date"
+                            id="date"
+                            type="date"
+                            placeholder="Enter Date"
+                            className="form-input"
+                            onChange={handleChange}
+                            value={formData.date}
+                        />
+                    </div>
+                    <div className="form-submit-buttons">
+                        <button className="cancel-btn" onClick={hideModal}>Cancel</button>
+                        <input form="add-expense-form" type="submit" value="Add" className="submit-btn" onClick={handleSubmit}/>
+                    </div>
                 </form>
             </div>
         </div>
