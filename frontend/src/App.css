@@ -1,57 +1,17 @@
+html, body, #root {
+  height: 100%;
+}
+
+.main-content {
+  min-height: 100vh;
+}
+
 body {
   background: linear-gradient(-90deg, #dbebd3 0%, #ebe4ca 100%);
   /* background: linear-gradient(-90deg, #dba3ee 0%, #a67dfe 100%);     Better color theme*/
   font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
-}
-
-/* for NavBar */
-
-.navbar-container{
-  padding-left: 70px;
-  padding-right: 70px;
-  border-bottom: 2px solid rgb(201, 199, 199);
-  color: #646464;
-  height: 60px;
-  display: grid;
-  grid-template-columns: 10% 70% 20%;
-  justify-content: space-around;
-}
-
-.title {
-  padding : 10px;
-  align-content: center;
-  text-align: center;
-}
-
-.navbar-list {
-  width: 100%;
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  list-style-type: none;
-}
-
-.navbar-icons{
-  width: 100%;
-  display: flex;
-  justify-content: right;
-  align-items: center;
-  list-style-type: none;
-}
-
-.navbar-list div ,.navbar-icons div {
-  cursor: pointer;
-  margin: 10px;
-}
-
-.navbar-icons img {
-  width: 20px;
-}
-
-.main-container{
-  padding: 30px 70px 0;
 }
 
 /* for TopContainer */

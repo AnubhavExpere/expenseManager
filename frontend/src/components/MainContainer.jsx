@@ -11,8 +11,7 @@ const date = new Date();
 function MainContainer(){
     const [incomeData, setIncomeData] = useState([0,0]);
     const [expenseData,setExpenseData] = useState([0,0]);
-
-    const userId = useContext(UserContext).userId;
+    
     const month = date.getMonth()+1;
     const prev_month = (month-1 == 0 ) ? 12 : month-1;
     const year = date.getFullYear();
@@ -20,14 +19,14 @@ function MainContainer(){
     useState(() => {
         const loadData = async () => {
             try {
-            const current_income = await getIncomeByMonthYear(userId, month, year);
-            const prev_income = await getIncomeByMonthYear(userId, prev_month, year);
+                const current_income = await getIncomeByMonthYear(month, year);
+                const prev_income = await getIncomeByMonthYear(prev_month, year);
 
-            const current_expense = await getExpenseByMonthYear(userId, month, year);
-            const prev_expense = await getExpenseByMonthYear(userId, prev_month, year);
-            
-            setIncomeData([current_income.income, prev_income.income]);
-            setExpenseData([current_expense.expense, prev_expense.expense]);
+                const current_expense = await getExpenseByMonthYear(month, year);
+                const prev_expense = await getExpenseByMonthYear(prev_month, year);
+                
+                setIncomeData([current_income.income, prev_income.income]);
+                setExpenseData([current_expense.expense, prev_expense.expense]);
             } catch (err) {
                 console.log('Failed to load income and expense data.')
             }

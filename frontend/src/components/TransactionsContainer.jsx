@@ -35,12 +35,11 @@ export default function TransactionsContainer(props){
 
     //user context
     const userContext = useContext(UserContext);
-    const userId = userContext.userId;
 
     useEffect(() => {
         const loadTransactions = async () => {
             try {
-                const fetchedTransactions = await getTransactions(userId);
+                const fetchedTransactions = await getTransactions();
                 setTransactions(fetchedTransactions);
             } catch (err) {
                 console.log(err);
