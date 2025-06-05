@@ -4,15 +4,14 @@ import { getUser } from "../services/UserAPI";
 export const UserContext = createContext();
 
 export const UserProvider = (props) => {
-    const [userId, setUserId] = useState(1);
     const [user, setUser] = useState({});
 
     useEffect(()=> {
         const fetchUserData = async () => {
             try {
-                const result = await getUser(userId);
-                setUser(result);
-                // console.log(result);                
+                const result = await getUser();
+                if(result.length > 0)
+                    setUser(result[0]);           
             } catch (err) {
                 console.log('Error fetching user data. \n', err);
             }
@@ -21,7 +20,7 @@ export const UserProvider = (props) => {
     }, [])
 
     return (
-        <UserContext.Provider value={{userId, user}}>
+        <UserContext.Provider value={user}>
             {props.children}
         </UserContext.Provider>
     )

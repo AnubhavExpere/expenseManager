@@ -1,8 +1,8 @@
-import { use } from "react"
+import axiosInstance from "./axiosInstance";
 
-const getSpendingDistribution = async (userId) => {
-    const reponse = await fetch(`http://localhost:8000/analysis?id=${userId}`);
-    const data = await reponse.json();
+const getSpendingDistribution = async () => {
+    const reponse = await axiosInstance.get(`http://localhost:8000/analysis`);
+    const data = await reponse.data;
     return data;
 }
 

@@ -1,24 +1,14 @@
-import { formToJSON } from "axios";
-import { useState } from "react";
-const BASE_URL = 'http://localhost:8000'
+import axiosInstance from "./axiosInstance";
 
-const getTransactions = async (id) => {
-    const response = await fetch(`${BASE_URL}/transactions?id=${id}`);
-    const data = await response.json();
+const getTransactions = async () => {
+    const response = await axiosInstance.get(`/transactions`);
+    const data = await response.data;
     return data;
 }
 async function addTransaction(formData){
     try {
-        const response = await fetch('http://localhost:8000/transactions', {
-            method: 'POST', 
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        });
-        if (!response.ok){
-            throw new Error('Failed to add expense!');
-        }
+        const response = await axiosInstance.post('/transactions', formData);
+        return response;
     } catch (error){
         console.log('Error: ', error);
     }

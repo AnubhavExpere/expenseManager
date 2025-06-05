@@ -3,8 +3,6 @@ import { useEffect, useState } from "react";
 import CustomizedLegend from "./CustomizedLegend";
 import { getSpendingDistribution } from "../services/AnalysisAPI";
 
-const USER_ID = 1
-
 export default function PieChartComponent(){
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -12,7 +10,7 @@ export default function PieChartComponent(){
     useEffect( () => {
         const loadSpendingDistr = async () => {
             try {
-                let result = await getSpendingDistribution(USER_ID);
+                let result = await getSpendingDistribution();
                 result = await result.map( obj => ({label: String(obj.category), value: parseFloat(obj.total_amount)}) )
                 setData(result);
             } catch (err) {

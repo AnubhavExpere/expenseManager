@@ -1,0 +1,86 @@
+.product-page {
+  padding: 0 5%;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #222;
+}
+
+.signin-btn {
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  font-weight: 500;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.signup-btn:hover {
+  background-color: #222;
+}
+
+.main {
+  
+}
+
+.headline {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.subtext {
+  max-width: 600px;
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 40px;
+}
+
+.features {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.feature-box {
+  background-color: #fcfbfb;;
+  padding: 20px;
+  border-radius: 10px;
+  flex: 1 1 250px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.feature-box h3 {
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.feature-box p {
+  color: #555;
+}
+
+.get-started-btn {
+  padding: 14px 28px;
+  background-color: #000;
+  color: #fff;
+  font-size: 1rem;
+  border: none;
+  border-radius: 35px;
+  cursor: pointer;
+}
+
+.get-started-btn:hover {
+  background-color: #222;
+}

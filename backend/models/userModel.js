@@ -1,8 +1,29 @@
 import pool from '../db/index.js'
 
+const insertUser = async (user) => {
+    try {
+        const response = await pool.query(`INSERT INTO users (first_name, last_name, phone, email, password, profile_photo_url)
+            VALUES ($1, $2, $3, $4, $5, $6)`, 
+            [user.first_name, user.last_name, user.phone, user.email, user.password, user.profile_photo_url]
+        ); 
+    } catch (err) {
+        console.log('Failed to insert User into database. \n', err);
+    }
+}
+
+const fetchUserByEmail = async (user) => {
+    try {
+        const response = await pool.query(`SELECT * FROM users WHERE email = $1`, [user.email]);
+        return response.rows;
+    } catch (err) {
+        console.log('Error authenticating user in database. \n', err)
+    }
+}
+
 const fetchUserDetails = async (userId) => {
     try {
-        const response = await pool.query('SELECT * FROM users WHERE id = $1', [userId]);
+        const response = await pool.query(`SELECT first_name, last_name, phone, email
+            FROM users WHERE id = $1`, [userId]);
         return response.rows;
     } catch (err) {
         console.log('Error fetching user details from database. \n', err);
@@ -53,4 +74,4 @@ const fetchExpenseByMonthYear = async (userId, month, year) => {
     }
 }
 
-export {fetchUserDetails, fetchMonthlyIncomeByYear, fetchMonthlyExpenseByYear, fetchIncomeByMonthYear, fetchExpenseByMonthYear};
+export {insertUser, fetchUserByEmail, fetchUserDetails, fetchMonthlyIncomeByYear, fetchMonthlyExpenseByYear, fetchIncomeByMonthYear, fetchExpenseByMonthYear};

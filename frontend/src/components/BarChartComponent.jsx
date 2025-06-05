@@ -11,28 +11,34 @@ export default function BarChartComponent() {
   const [data, setData] = useState([]);
 
   const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const userId = useContext(UserContext).userId;
   const year = DATE.getFullYear();
 
   useEffect(() => {
-    const loadMonthlyData = async () => {
-      const incomeData = await getMonthlyIncomeByYear(userId, year);
-      const expenseData = await getMonthlyExpenseByYear(userId, year);
+    try {
+      const loadMonthlyData = async () => {
+        try {
+            const incomeData = await getMonthlyIncomeByYear(year);
+            const expenseData = await getMonthlyExpenseByYear(year);
 
-      const monthlyData = MONTHS.map((label, index) => {
-        const incomeObj = incomeData.find(item => parseInt(item.month) === index + 1);
-        const expenseObj = expenseData.find(item => parseInt(item.month) === index + 1);
-
-        return {
-          label,
-          income: incomeObj ? parseFloat(incomeObj.income) : 0,
-          expense: expenseObj ? parseFloat(expenseObj.expense) : 0,
-        };
-      }); 
-
-      setData(monthlyData);
+            const monthlyData = MONTHS.map((label, index) => {
+              const incomeObj = incomeData.find(item => parseInt(item.month) === index + 1);
+              const expenseObj = expenseData.find(item => parseInt(item.month) === index + 1);
+                
+              return {
+                label,
+                income: incomeObj ? parseFloat(incomeObj.income) : 0,
+                expense: expenseObj ? parseFloat(expenseObj.expense) : 0,
+              };
+            });
+            setData(monthlyData);
+        } catch (err) {
+            console.err('Failed to load bar chart data from API');  
+        } 
+      }
+      loadMonthlyData();
+    } catch (err) {
+        console.err('Error loading bar chart data. \n', err);
     }
-    loadMonthlyData();
   }, []);
 
   return (
