@@ -3,6 +3,7 @@ import TransactionsContainer from "./TransactionsContainer";
 import Button from './Button';
 import GoalProgress from "./GoalProgress";
 import SortBox from "./SortBox";
+import SearchTransactionBar from "./SearchTransactionBar";
 
 export default function BottomContainer(){
     const [searchQuery, setSearchQuery] = useState('');
@@ -37,10 +38,7 @@ export default function BottomContainer(){
         <div className='bottom-container'>
             <div className='transactions-view'>
                 <div className='view-controls'>
-                    <div className='search-transactions'>
-                        <img src='assets/search.png' style={{width: '20px', height: '20px'}}/>
-                        <input type='text' placeholder="Search transactions" value={searchQuery} onChange={handleChange} />
-                    </div>
+                    <SearchTransactionBar value={searchQuery} onChangeCallback={handleChange}/>
                     <div className="sort-filter-buttons">
                         <div ref={sortBtnRef} style={{position: 'relative'}}>
                             <Button icon='assets/sort.png' text='Sort' onClickCallback={toggleSortBox} bgColor='white' textColor='#646464'

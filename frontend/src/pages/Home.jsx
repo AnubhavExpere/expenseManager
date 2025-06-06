@@ -8,12 +8,9 @@ import SortBox from '../components/SortBox';
 function Home() {
     return (
         <>
-            <ModalProvider>
-                <MainContainer />
-                <BottomContainer />
-                <AddTransaction />
-                <ImportModal />
-            </ModalProvider>
+            <MainContainer />
+            <BottomContainer />
+            <ImportModal />
         </>
     )
 }

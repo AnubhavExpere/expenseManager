@@ -1,47 +1,46 @@
-import { useContext, useState } from "react";
-import '../styles/TransactionModal.css';
-import {addTransaction} from "../services/TransactionAPI"; 
-import { ModalContext } from "../context/Modal";
+import { useState, useContext } from 'react';
+import { ModalContext } from '../context/Modal';
+import { editTransaction } from '../services/TransactionAPI';
+import '../styles/TransactionModal.css'
 
-export default function AddTransactionModal(){
+const EditTransactionModal = ({editingTransaction, setEditingTransaction, onSave}) => {
+    const transactionId = editingTransaction.id;
     const [formData, setFormData] = useState({
-        amount: '',
-        category: '',
-        receiver: '',
-        payment_method: '',
-        date: '',
-        description: '',
+        amount: editingTransaction.amount,
+        category: editingTransaction.category,
+        receiver: editingTransaction.receiver,
+        payment_method: editingTransaction.payment_method,
+        timestamp: editingTransaction.timestamp,
+        description: editingTransaction.description,
     });
-
-    const modalContext = useContext(ModalContext);
 
     const handleChange = (event) => {
         const {name, value} = event.target;
         setFormData(prev => ({...prev, [name]: value}));
-        // console.log(formData);
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const result = await addTransaction(formData);
-            if(result.status === 201)
-                modalContext.setVisibleAddExpense(false);
-        }  catch (err) {
-            console.error('Error adding transaction. \n', err);
+            const result = await editTransaction(transactionId, formData);
+            const updatedTransaction = result.data;
+            onSave(updatedTransaction);
+            console.log(result.message);
+        } catch (err) {
+            console.error('Transaction edit failed. \n', err);
         }
-    }
+    }  
 
     const hideModal = (e) => {
         e.preventDefault();
-        modalContext.setVisibleAddExpense(false);
+        setEditingTransaction(null);
     }
 
     return (
-        <div className={`modal-container ${modalContext.visibleAddExpense ? '' : 'hide-container'}`}>
+        <div className={`modal-container`}>
             <div className="modal-content">
                 <div className="add-expense-header">
-                    <h1>Add Expense</h1>
+                    <h1>Edit Transaction</h1>
                     <img src='assets/close.png' className="close-btn" id="close" onClick={hideModal} />
                 </div>
                 <form id="add-expense-form">
@@ -108,21 +107,23 @@ export default function AddTransactionModal(){
                     <div className="input-container">
                         <label htmlFor="date">Date</label>
                         <input
-                            name="date"
+                            name="timestamp"
                             id="date"
                             type="date"
                             placeholder="Enter Date"
                             className="form-input"
                             onChange={handleChange}
-                            value={formData.date}
+                            value={formData.timestamp.split('T')[0]}
                         />
                     </div>
                     <div className="form-submit-buttons">
                         <button className="cancel-btn" onClick={hideModal}>Cancel</button>
-                        <input form="add-expense-form" type="submit" value="Add" className="submit-btn" onClick={handleSubmit}/>
+                        <input form="add-expense-form" type="submit" value="Confirm" className="submit-btn" onClick={handleSubmit}/>
                     </div>
                 </form>
             </div>
         </div>
     );
 }
+
+export default EditTransactionModal;

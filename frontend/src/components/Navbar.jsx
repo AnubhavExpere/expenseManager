@@ -2,10 +2,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import '../styles/Navbar.css';
 import { Link } from 'react-router-dom';
 import TopDropdown from './TopDropdown';
+import { useNavigate } from 'react-router-dom';
 
 function Navbar(){
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef();
+    const navigate = useNavigate();
 
     const handleClick = ()=> {
         setShowDropdown(prev => !prev);
@@ -27,11 +29,11 @@ function Navbar(){
     return (
         <div className="navbar-container">
             {/* <Link to="/"> */}
-                <div className="title">Expnsy</div>
+                <div className="navbar-logo" onClick={() => navigate('/home')}>Expnsy</div>
             {/* </Link> */}
             <div className='navigation-core-list'>
-                <div className='navigation-core-list-item'>Home</div>
-                <div className='navigation-core-list-item'>Transactions</div>
+                <div className='navigation-core-list-item' onClick={() => navigate('/home')}>Home</div>
+                <div className='navigation-core-list-item' onClick={() => navigate('/transactions')}>Transactions</div>
                 <div className='navigation-core-list-item'>Contact Us</div>
                 {/* <div className='navigation-core-list-item'>Settings</div> */}
             </div>

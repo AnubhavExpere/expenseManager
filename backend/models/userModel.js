@@ -13,7 +13,7 @@ const insertUser = async (user) => {
 
 const fetchUserByEmail = async (user) => {
     try {
-        const response = await pool.query(`SELECT * FROM users WHERE email = $1`, [user.email]);
+        const response = await pool.query(`SELECT * FROM users WHERE email = $1 AND deleted=FALSE`, [user.email]);
         return response.rows;
     } catch (err) {
         console.log('Error authenticating user in database. \n', err)
@@ -23,7 +23,7 @@ const fetchUserByEmail = async (user) => {
 const fetchUserDetails = async (userId) => {
     try {
         const response = await pool.query(`SELECT first_name, last_name, phone, email
-            FROM users WHERE id = $1`, [userId]);
+            FROM users WHERE id = $1 AND deleted=FALSE`, [userId]);
         return response.rows;
     } catch (err) {
         console.log('Error fetching user details from database. \n', err);
