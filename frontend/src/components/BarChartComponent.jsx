@@ -32,12 +32,12 @@ export default function BarChartComponent() {
             });
             setData(monthlyData);
         } catch (err) {
-            console.err('Failed to load bar chart data from API');  
+            console.error('Failed to load bar chart data from API');  
         } 
       }
       loadMonthlyData();
     } catch (err) {
-        console.err('Error loading bar chart data. \n', err);
+        console.error('Error loading bar chart data. \n', err);
     }
   }, []);
 

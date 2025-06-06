@@ -7,12 +7,14 @@
   display: grid;
   grid-template-columns: 10% 70% 20%;
   justify-content: space-around;
+  font-size: 16px;
 }
 
-.title {
-  padding : 10px;
+.navbar-logo {
+  padding : 10px 10px 10px 0;
   align-content: center;
   text-align: center;
+  cursor: pointer;
 }
 
 .navigation-core-list {
