@@ -1,4 +1,4 @@
-# Expense Manager Web App
+# Personal Expense Management App
 
 ### Home Page
 ![](showcase/home_page_1.jpg)
